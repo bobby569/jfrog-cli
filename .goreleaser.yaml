@@ -1,0 +1,21 @@
+# Check the documentation at https://goreleaser.com
+before:
+  hooks:
+    - rm -rf ./dist
+    - go mod tidy
+    - go generate ./...
+builds:
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+
+nfpms:
+- file_name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Arch }}'
+  maintainer: 'Bobby Zhang'
+  license: MIT
+  formats:
+  - deb
+  - rpm
